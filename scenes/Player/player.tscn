@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://cs5bkorjhrp04"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sh265"]
+radius = 0.35
+height = 1.8
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_kk62l"]
+
+[node name="Player" type="CharacterBody3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Camera3D"]
+light_energy = 0.9
+light_indirect_energy = 0.0
+shadow_enabled = true
+distance_fade_begin = 50.0
+distance_fade_length = 50.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+shape = SubResource("CapsuleShape3D_sh265")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+mesh = SubResource("CapsuleMesh_kk62l")
+skeleton = NodePath("../CollisionShape3D")

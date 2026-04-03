@@ -1,0 +1,130 @@
+[gd_scene load_steps=12 format=3 uid="uid://biegkeafv06i4"]
+
+[ext_resource type="PackedScene" uid="uid://cs5bkorjhrp04" path="res://scenes/Player/player.tscn" id="1_48ne7"]
+[ext_resource type="Script" uid="uid://b4e55eikufq8o" path="res://script/player/player.gd" id="2_6xh4u"]
+[ext_resource type="Script" uid="uid://c4adxxks1hxx1" path="res://script/puzzles/terminal_box_(repair).gd" id="3_cyt5c"]
+[ext_resource type="Script" uid="uid://d2f0mm3uvhynh" path="res://script/puzzles/door.gd" id="4_7x1jh"]
+[ext_resource type="PackedScene" uid="uid://btww6glf4aml" path="res://scenes/Entities/entity_stalker.tscn" id="5_hfwtw"]
+
+[sub_resource type="Environment" id="Environment_x60sr"]
+background_mode = 1
+background_color = Color(0.8992584, 0.8992584, 0.8992584, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.92183524, 0.94237137, 1, 1)
+ambient_light_energy = 0.1
+
+[sub_resource type="Gradient" id="Gradient_oqbmf"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_arrdh"]
+gradient = SubResource("Gradient_oqbmf")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ju58f"]
+albedo_color = Color(1, 1, 0.05490196, 1)
+emission_enabled = true
+emission = Color(1, 1, 0, 1)
+emission_energy_multiplier = 0.0
+emission_texture = SubResource("GradientTexture1D_arrdh")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_arrdh"]
+albedo_color = Color(0.3764706, 1, 0, 1)
+emission_enabled = true
+emission = Color(0, 0.7494335, 0, 1)
+emission_energy_multiplier = 0.33
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sqxie"]
+albedo_color = Color(0.6392157, 0.6784314, 0, 1)
+
+[node name="test level" type="Node3D"]
+
+[node name="Floor" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 5)
+use_collision = true
+size = Vector3(20, 0.5, 30)
+
+[node name="Wall" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, -10)
+use_collision = true
+size = Vector3(20, 5, 0.5)
+
+[node name="Wall2" type="CSGBox3D" parent="."]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -10.174341, 2.5, 5.00144)
+use_collision = true
+size = Vector3(30, 5, 0.5)
+
+[node name="Wall3" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 20)
+use_collision = true
+size = Vector3(20, 5, 0.5)
+
+[node name="Wall4" type="CSGBox3D" parent="."]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 10.006357, 2.5, 5.00144)
+use_collision = true
+size = Vector3(30, 5, 0.5)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_x60sr")
+
+[node name="Player" parent="." groups=["player"] instance=ExtResource("1_48ne7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 3.7616289)
+script = ExtResource("2_6xh4u")
+
+[node name="Terminal box (repair)" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0000477, -9.61089)
+use_collision = true
+size = Vector3(0.5, 0.7, 0.3)
+material = SubResource("StandardMaterial3D_ju58f")
+script = ExtResource("3_cyt5c")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Terminal box (repair)"]
+light_color = Color(1, 0, 0, 1)
+light_energy = 3.29
+light_indirect_energy = 0.2
+light_volumetric_fog_energy = 0.1
+light_specular = 0.0
+
+[node name="Door" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 19.727905)
+use_collision = true
+size = Vector3(1.5, 2, 0.15)
+material = SubResource("StandardMaterial3D_arrdh")
+script = ExtResource("4_7x1jh")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Door"]
+light_color = Color(0.20784314, 0.7529412, 0, 1)
+light_energy = 2.842
+light_indirect_energy = 0.25
+light_volumetric_fog_energy = 0.25
+omni_range = 3.0
+
+[node name="Entity" parent="." instance=ExtResource("5_hfwtw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.0889, 0.812037, 8.481229)
+
+[node name="object pillar3" type="CSGBox3D" parent="."]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -14.492187, 2, 0.68667173)
+material_override = SubResource("StandardMaterial3D_sqxie")
+use_collision = true
+size = Vector3(5, 6, 1)
+
+[node name="object pillar4" type="CSGBox3D" parent="."]
+transform = Transform3D(0.99994826, 0, 0.010175202, 0, 1, 0, -0.010175202, 0, 0.99994826, 15.949393, 2.0253906, -2.1250741)
+material_override = SubResource("StandardMaterial3D_sqxie")
+use_collision = true
+size = Vector3(5, 5.9492188, 1)
+
+[node name="object pillar5" type="CSGBox3D" parent="."]
+transform = Transform3D(0.99994826, 0, 0.010175202, 0, 1, 0, -0.010175202, 0, 0.99994826, 15.584143, 2.0253906, 12.736835)
+material_override = SubResource("StandardMaterial3D_sqxie")
+use_collision = true
+size = Vector3(5, 5.9492188, 1)
+
+[node name="object pillar6" type="CSGBox3D" parent="."]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -15.99252, 2, 10.348963)
+material_override = SubResource("StandardMaterial3D_sqxie")
+use_collision = true
+size = Vector3(5, 6, 1)
+
+[node name="object pillar7" type="CSGBox3D" parent="."]
+transform = Transform3D(0.057877824, 0, -0.9983236, 0, 1, 0, 0.9983236, 0, 0.057877824, 15.919401, 2.0253906, 5.583729)
+material_override = SubResource("StandardMaterial3D_sqxie")
+use_collision = true
+size = Vector3(5, 5.9492188, 1)
